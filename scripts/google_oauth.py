@@ -2,10 +2,10 @@
 import threading, json, time, webbrowser
 from urllib.parse import urlencode
 import requests
+from pathlib import Path
 from flask import Flask, request
 
 # === 1) CONFIG ===
-# Replace with your own values from Google Cloud Console → APIs & Services → Credentials
 CLIENT_ID = "823344079673-gnpgl76j79rvbp0h8ne81jrke1ngs4j6.apps.googleusercontent.com"
 CLIENT_SECRET = "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"
 
@@ -19,8 +19,11 @@ SCOPES = ["https://www.googleapis.com/auth/youtube.readonly"]
 AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 
-# Where to persist tokens (optional)
-TOKENS_PATH = "tokens.json"   # <-- will be created/overwritten
+# -------- Root-aware paths --------
+ROOT = Path(__file__).resolve().parents[1]   # parent of /scripts
+DATA_DIR = ROOT / "data"
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+TOKENS_PATH = DATA_DIR / "tokens.json"   # <-- will be created/overwritten
 
 # ====== Flask callback ======
 app = Flask(__name__)
@@ -51,17 +54,7 @@ def oauth_callback():
 def run_flask():
     app.run(host="0.0.0.0", port=8080, threaded=True)
 
-# def refresh_access_token(refresh_token: str):
-#     payload = {
-#         "grant_type": "refresh_token",
-#         "refresh_token": refresh_token,
-#         "client_id": CLIENT_ID,
-#         "client_secret": CLIENT_SECRET,
-#     }
-#     r = requests.post(TOKEN_URL, data=payload, timeout=30)
-#     r.raise_for_status()
-#     return r.json()
-
+# ====== Main OAuth flow ======
 def main():
     # Start Flask in background
     server_thread = threading.Thread(target=run_flask, daemon=True)
@@ -107,12 +100,10 @@ def main():
     token_res.raise_for_status()
     tokens = token_res.json()
 
-    # Persist tokens for reuse by yt_scraper.py
-    # IMPORTANT: tokens.json contains sensitive credentials – keep it private.
-    with open(TOKENS_PATH, "w") as f:
-        json.dump(tokens, f, indent=2)
+    # Persist tokens for reuse by scraper
+    TOKENS_PATH.write_text(json.dumps(tokens, indent=2))
 
-    print("Saved tokens to tokens.json")
+    print(f"Saved tokens to {TOKENS_PATH}")
     print({k: tokens.get(k) for k in ["access_token", "expires_in", "refresh_token", "token_type"]})
 
 if __name__ == "__main__":
