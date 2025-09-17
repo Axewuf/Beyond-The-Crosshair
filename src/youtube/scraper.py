@@ -10,6 +10,8 @@ import time
 from pathlib import Path
 from typing import Dict, Optional
 import requests
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 SEARCH_URL  = "https://www.googleapis.com/youtube/v3/search"
 VIDEOS_URL  = "https://www.googleapis.com/youtube/v3/videos"
@@ -97,7 +99,7 @@ class _TokenManager:
 def scrape(
     query: str = "counter strike",
     order: str = "viewCount",
-    target: int = 200_000,
+    target: int = 1000,
     batch_size: int = 50,
     csv_path: Optional[str | Path] = None,
     state_path: Optional[str | Path] = None,
@@ -140,7 +142,13 @@ def scrape(
 
     sleep_s = BASE_SLEEP
 
+    start_date = datetime.strptime("2008-01-01T00:00:00Z", "%Y-%m-%dT%H:%M:%SZ")
+    end_date = datetime.strptime("2008-02-01T00:00:00Z", "%Y-%m-%dT%H:%M:%SZ")
+
     while collected < target:
+        formatted_start_date = start_date.isoformat() + "Z"
+        formatted_end_date = end_date.isoformat() + "Z"
+        print(f"DATES: {formatted_start_date}    to     {formatted_end_date}")
         # ---- search.list ----
         params_search = {
             "part": "id",
@@ -148,7 +156,11 @@ def scrape(
             "type": "video",
             "maxResults": batch_size,
             "order": order,
+            "publishedAfter": formatted_start_date,
+            "publishedBefore": formatted_end_date
         }
+        start_date = start_date + relativedelta(months=1)
+        end_date = end_date + relativedelta(months=1)
         if next_page:
             params_search["pageToken"] = next_page
 
@@ -166,7 +178,7 @@ def scrape(
         video_ids = [it["id"]["videoId"] for it in data.get("items", []) if "videoId" in it.get("id", {})]
         if not video_ids:
             print("No more results from search.list; stopping.")
-            break
+            continue
 
         # ---- videos.list ----
         params_videos = {
@@ -213,11 +225,12 @@ def scrape(
 
         print(f"Collected {collected} … nextPageToken={next_page}")
 
-        if not next_page:
-            print("Reached end of pagination for this query.")
-            break
+        # if not next_page:
+        #     print("Reached end of pagination for this query.")
+        #     break
 
         time.sleep(0.1)
+
 
     print(f"Done. CSV: {csv_path} | State: {state_path}")
     return collected
