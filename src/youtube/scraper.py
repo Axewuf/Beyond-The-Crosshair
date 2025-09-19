@@ -174,7 +174,7 @@ def scrape_4mo_top50(
 
     tm = _TokenManager(tokens_path, client_id or CLIENT_ID, client_secret or CLIENT_SECRET)
     windows = _windows(start, end)
-
+    
     # resume
     resume_idx = 0
     if state_path.exists():
