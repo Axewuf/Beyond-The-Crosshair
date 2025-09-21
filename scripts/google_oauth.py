@@ -6,8 +6,8 @@ from pathlib import Path
 from flask import Flask, request
 
 # === 1) CONFIG ===
-CLIENT_ID = "823344079673-gnpgl76j79rvbp0h8ne81jrke1ngs4j6.apps.googleusercontent.com"
-CLIENT_SECRET = "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"
+CLIENT_ID = "1022046537831-c6tsit6101ptqkcjvsb3o6k6nh0495pi.apps.googleusercontent.com"
+CLIENT_SECRET = "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"
 
 # The redirect URI must exactly match what you register in Google Cloud Console
 REDIRECT_URI = "http://localhost:8080/callback"
@@ -23,7 +23,7 @@ TOKEN_URL = "https://oauth2.googleapis.com/token"
 ROOT = Path(__file__).resolve().parents[1]   # parent of /scripts
 DATA_DIR = ROOT / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
-TOKENS_PATH = DATA_DIR / "tokens.json"   # <-- will be created/overwritten
+TOKENS_PATH = DATA_DIR / "tokens_acct1.json"  # <-- will be created/overwritten
 
 # ====== Flask callback ======
 app = Flask(__name__)
