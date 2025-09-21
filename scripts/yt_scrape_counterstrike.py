@@ -10,8 +10,7 @@ STATE = ASSETS / "yt_counter_strike_monthly_state.json"
 
 TOKS = [
     DATA / "tokens_acc1.json",
-    DATA / "tokens_acc2.json",
-    DATA / "tokens_acc3.json",
+    DATA / "tokens_acc2.json"
 ]
 
 scrape_monthly_top50(
