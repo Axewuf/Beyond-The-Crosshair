@@ -6,8 +6,11 @@ from pathlib import Path
 from flask import Flask, request
 
 # === 1) CONFIG ===
-CLIENT_ID = "1022046537831-c6tsit6101ptqkcjvsb3o6k6nh0495pi.apps.googleusercontent.com"
-CLIENT_SECRET = "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"
+# CLIENT_ID = "1022046537831-c6tsit6101ptqkcjvsb3o6k6nh0495pi.apps.googleusercontent.com" # Tanzim
+# CLIENT_SECRET = "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" # Tanzim
+
+CLIENT_ID = "823344079673-gnpgl76j79rvbp0h8ne81jrke1ngs4j6.apps.googleusercontent.com" # Rodrigo
+CLIENT_SECRET = "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" # Rodrigo
 
 # The redirect URI must exactly match what you register in Google Cloud Console
 REDIRECT_URI = "http://localhost:8080/callback"
