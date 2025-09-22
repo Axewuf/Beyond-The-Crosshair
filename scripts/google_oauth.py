@@ -23,7 +23,7 @@ TOKEN_URL = "https://oauth2.googleapis.com/token"
 ROOT = Path(__file__).resolve().parents[1]   # parent of /scripts
 DATA_DIR = ROOT / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
-TOKENS_PATH = DATA_DIR / "tokens_acct2.json"  # <-- will be created/overwritten
+TOKENS_PATH = DATA_DIR / "tokens.json"  # <-- will be created/overwritten
 
 # ====== Flask callback ======
 app = Flask(__name__)
