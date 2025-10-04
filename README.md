@@ -96,3 +96,16 @@ This notebook produces the final set of visuals and insights used for presentati
 - Automating ingestion of SteamDB and tracker.gg tables currently copy-pasted.  
 - Expanding API coverage to include additional competitor titles and esports platforms.  
 - Extending visualizations into an interactive dashboard for broader accessibility.  
+
+---
+
+## Acknowledgements  
+
+Portions of this project made use of generative AI assistance.  
+- **Image assets:** AI image generation tools were used to create or refine certain visuals, such as Counter-Strike-themed scoreboard graphics or background slide designs.  
+- **Visualization formatting:** AI was asked to suggest adjustments to Altair plots, for example:  
+  - making axis labels larger and more readable  
+  - centering charts on a background and removing borders  
+  - adjusting gradient scales to show clearer differences between above-line and below-line points  
+
+These contributions were used to enhance clarity and presentation quality, but all data collection, cleaning, integration, and statistical analysis were performed directly by the project team.  
