@@ -16,7 +16,7 @@ GEO, GPROP, CAT = "", "", 0
 SLEEP = 1.0
 
 ASSETS = Path("assets")
-peaks = pd.read_csv(ASSETS / "trends_peaks_single.csv")   # from your single-term run
+peaks = pd.read_csv(ASSETS / "trends_peaks_single.csv")   # from single-term run
 # expect columns: game, peak_value, peak_month (YYYY-MM)
 peak_map = dict(zip(peaks["game"], peaks["peak_month"]))
 

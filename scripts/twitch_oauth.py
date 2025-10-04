@@ -7,7 +7,7 @@ import requests
 from time import time
 
 # ====== 1) CONFIG ======
-# Fill these with your Twitch app's credentials from https://dev.twitch.tv/console/apps
+# Fill these with Twitch app's credentials from https://dev.twitch.tv/console/apps
 CLIENT_ID     = "njp50qwu2nvpsx219fyqo3bzv63oin"
 CLIENT_SECRET = "aj984frk38246b37cmyajzixsp8avs"
 
